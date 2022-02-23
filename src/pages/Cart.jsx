@@ -1,5 +1,6 @@
 import { Add, Remove } from '@material-ui/icons';
 import React from 'react'
+import { useSelector } from 'react-redux';
 import styled from 'styled-components'
 import Announcements from '../components/Announcements';
 import Footer from '../components/Footer';
@@ -165,6 +166,7 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+    const cart = useSelector(state => state.cart);
     return (
         <Container>
             <Navbar />
@@ -181,51 +183,33 @@ const Cart = () => {
                 </Top>
                 <Bottom>
                     <Info>
-                        <Product>
+                        {cart.products.map(product => ( <Product>
                             <ProductDetail>
-                                <Image src="https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F8f%2Fc4%2F8fc49789c531e3f959b7d27fe7827086110e7684.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url[file:/product/main]" />
+                                <Image src={product.img} />
                                 <Details>
-                                    <ProductName><b>Product:</b> JESSIE THUNDER SHOES</ProductName>
-                                    <ProductId><b>ID:</b> 598138</ProductId>
-                                    <ProductColor color="beige" />
-                                    <ProductSize><b>Size:</b> 41</ProductSize>
+                                    <ProductName><b>Product:</b> {product.title}</ProductName>
+                                    <ProductId><b>ID:</b> {product._id}</ProductId>
+                                    <ProductColor color={product.color} />
+                                    <ProductSize><b>Size:</b> {product.size}</ProductSize>
                                 </Details>
                             </ProductDetail>
                             <PriceDetail>
                                 <ProductAmountContainer>
                                     <Add />
-                                    <ProductAmount>2</ProductAmount>
+                                    <ProductAmount>{product.quantity}</ProductAmount>
                                     <Remove />
                                 </ProductAmountContainer>
-                                <ProductPrice>$ 30</ProductPrice>
+                                <ProductPrice>$ {product.price * product.quantity}</ProductPrice>
                             </PriceDetail>
                         </Product>
+                        ))}
                         <Hr />
-                        <Product>
-                            <ProductDetail>
-                                <Image src="https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F8f%2F93%2F8f93493579dbb186610c3f2c5f608ea83b10a081.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url[file:/product/main]" />
-                                <Details>
-                                    <ProductName><b>Product:</b> RELAXED FIT HOODIE</ProductName>
-                                    <ProductId><b>ID:</b> 641284</ProductId>
-                                    <ProductColor color="orange" />
-                                    <ProductSize><b>Size:</b> M</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Add />
-                                    <ProductAmount>2</ProductAmount>
-                                    <Remove />
-                                </ProductAmountContainer>
-                                <ProductPrice>$ 30</ProductPrice>
-                            </PriceDetail>
-                        </Product>
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                         <SummaryItem>
                             <SummaryItemText>Subtotal</SummaryItemText>
-                            <SummaryItemPrice>$120</SummaryItemPrice>
+                            <SummaryItemPrice>${cart.total}</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>Shipping</SummaryItemText>
@@ -237,7 +221,7 @@ const Cart = () => {
                         </SummaryItem>
                         <SummaryItem type="total">
                             <SummaryItemText>Total</SummaryItemText>
-                            <SummaryItemPrice>$120</SummaryItemPrice>
+                            <SummaryItemPrice>${cart.total}</SummaryItemPrice>
                         </SummaryItem>
                         <Button>CHECKOUT NOW</Button>
                     </Summary>
