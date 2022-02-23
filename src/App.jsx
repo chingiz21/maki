@@ -4,14 +4,28 @@ import Login from './pages/Login';
 import { Product } from './pages/Product';
 import ProductList from './pages/ProductList';
 import Register from './pages/Register';
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Navigate
+  } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 const App = () => {
-    // return <Home / > ;
-    // return <ProductList />;
-    // return <Product />;
-    // return <Register />;
-    // return <Login />;
-    return <Cart />;
+    const user = useSelector(state => state.user.currentUser);
+    return (
+        <Router>
+            <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/login' element={user ? <Navigate to="/" /> : <Login />}/>
+                <Route path='/register' element={user ? <Navigate to="/" /> : <Register />}/>
+                <Route path='/products/:category' element={<ProductList />}/>
+                <Route path='/product/:id' element={<Product />}/>
+                <Route path='/cart/' element={<Cart />}/>
+            </Routes>
+        </Router>
+    )
 };
 
 export default App;
