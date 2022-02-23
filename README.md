@@ -25,6 +25,5 @@ Created "Maki" e-shop, using React & Styled Components
 ![alt text](public/imgs/1.png) 
 ![alt text](public/imgs/2.png)
 ![alt text](public/imgs/3.png)
-![alt text](public/imgs/4.png)
 ![alt text](public/imgs/5.png)
 ![alt text](public/imgs/6.png)
